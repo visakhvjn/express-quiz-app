@@ -13,8 +13,10 @@ export const getQuestion = async () => {
 		messages: [
 			{
 				role: 'system',
-				content:
-					'You are a helpful assistant who is creating a quiz application related to technology, software engineering, system design etc in general.',
+				content: `
+					You are a helpful assistant who is creating a quiz application related to technology, software engineering, system design etc in general.
+					Try not to repeat the topics from previous questions.
+					`,
 			},
 			{
 				role: 'user',
