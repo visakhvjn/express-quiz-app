@@ -14,7 +14,7 @@ export const getQuestion = async () => {
 			{
 				role: 'system',
 				content:
-					'You are a helpful assistant who is creating a quiz application related to technology in general.',
+					'You are a helpful assistant who is creating a quiz application related to technology, software engineering, system design etc in general.',
 			},
 			{
 				role: 'user',
