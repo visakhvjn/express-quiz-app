@@ -1,6 +1,8 @@
 import OpenAI from 'openai';
 import dotenv from 'dotenv';
 
+import { topics } from './topics.js';
+
 dotenv.config();
 
 const openai = new OpenAI({
@@ -8,13 +10,17 @@ const openai = new OpenAI({
 });
 
 export const getQuestion = async () => {
+	const topic = getRandomTopic();
+
+	console.log(topic);
+
 	const response = await openai.chat.completions.create({
 		model: 'gpt-4.1-nano',
 		messages: [
 			{
 				role: 'system',
 				content: `
-					You are a helpful assistant who is creating a quiz application related to technology, software engineering, system design etc in general.
+					You are a helpful assistant who is creating a quiz application related to ${topic} in general.
 					Try not to repeat the topics from previous questions.
 					`,
 			},
@@ -43,4 +49,9 @@ export const getQuestion = async () => {
 	});
 
 	return response.choices[0].message.content;
+};
+
+const getRandomTopic = () => {
+	const randomIndex = Math.floor(Math.random() * topics.length);
+	return topics[randomIndex];
 };
