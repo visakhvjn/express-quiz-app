@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Create Topic - Quiz App</title>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--primary: #2563eb;
+				--primary-hover: #1d4ed8;
+				--background: #f8fafc;
+				--card-bg: #ffffff;
+				--text: #1e293b;
+			}
+
+			body {
+				min-height: 100vh;
+				font-family: 'Inter', sans-serif;
+				background-color: var(--background);
+				color: var(--text);
+				padding-top: 70px;
+			}
+
+			.navbar {
+				background: var(--card-bg);
+				box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+			}
+
+			.form-container {
+				background: var(--card-bg);
+				border-radius: 16px;
+				padding: 2rem;
+				box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+			}
+
+			.btn-primary {
+				background: var(--primary);
+				border: none;
+				transition: all 0.2s ease;
+			}
+
+			.btn-primary:hover {
+				background: var(--primary-hover);
+			}
+
+			.subtopic-input {
+				margin-bottom: 10px;
+			}
+
+			a {
+				text-decoration: none;
+			}
+		</style>
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-lg fixed-top">
+			<div class="container-fluid">
+				<a href="/"><span class="navbar-brand fw-semibold">Quiz App</span></a>
+			</div>
+		</nav>
+
+		<div class="container py-4">
+			<div class="row justify-content-center">
+				<div class="col-12 col-md-8 col-lg-6">
+					<div class="form-container">
+						<h1 class="mb-4 text-center">Create a New Topic</h1>
+						<form action="/topics" method="POST">
+							<div class="mb-3">
+								<label for="topicName" class="form-label"
+									><b>Topic Name</b></label
+								>
+								<input
+									type="text"
+									class="form-control"
+									id="topicName"
+									name="topic"
+									placeholder="Keep it short"
+									required
+								/>
+							</div>
+							<div class="mb-3">
+								<label for="topicDescription" class="form-label"
+									><b>Description</b></label
+								>
+								<textarea
+									class="form-control"
+									id="topicDescription"
+									name="description"
+									rows="4"
+									placeholder="A detailed description will make the questions better"
+									required
+								></textarea>
+							</div>
+							<div class="mb-3">
+								<label class="form-label"><b>Subtopics</b></label>
+								<p>
+									Subtopics are optional. The system will generate subtopics
+									based on the topic and description when empty
+								</p>
+								<div id="subtopics-container">
+									<input
+										type="text"
+										class="form-control subtopic-input"
+										name="subtopics[]"
+										placeholder="Enter subtopic"
+									/>
+								</div>
+								<button
+									type="button"
+									class="btn btn-sm btn-outline-primary mt-2"
+									id="add-subtopic-btn"
+								>
+									Add Subtopic
+								</button>
+							</div>
+							<div class="d-flex justify-content-between">
+								<a href="/topics" class="btn btn-secondary">Cancel</a>
+								<button type="submit" class="btn btn-primary">
+									Create Topic
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="/js/create-topic.js"></script>
+	</body>
+</html>

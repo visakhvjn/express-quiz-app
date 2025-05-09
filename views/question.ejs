@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Quiz App</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+		<style>
+			:root {
+				--primary: #2563eb;
+				--primary-hover: #1d4ed8;
+				--correct: #16a34a;
+				--incorrect: #dc2626;
+				--background: #f8fafc;
+				--card-bg: #ffffff;
+				--text: #1e293b;
+			}
+			
+			body {
+				min-height: 100vh;
+				font-family: 'Inter', sans-serif;
+				background-color: var(--background);
+				color: var(--text);
+				padding-top: 70px;
+				line-height: 1.5;
+			}
+			
+			.quiz-container {
+				background: var(--card-bg);
+				border-radius: 16px;
+				box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+			}
+			
+			.navbar {
+				background: var(--card-bg);
+				box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+			}
+			
+			.new-quiz-btn {
+				background: var(--primary);
+				color: white;
+				border: none;
+				padding: 0.75rem 1.5rem;
+				border-radius: 8px;
+				cursor: pointer;
+				font-size: 1rem;
+				font-weight: 500;
+				text-decoration: none;
+				transition: all 0.2s ease;
+			}
+			
+			.new-quiz-btn:hover {
+				background: var(--primary-hover);
+				transform: translateY(-1px);
+			}
+			
+			.option-button {
+				flex: 1;
+				padding: 1rem;
+				margin: 8px;
+				border: 1px solid #e2e8f0;
+				border-radius: 8px;
+				background-color: var(--card-bg);
+				cursor: pointer;
+				text-align: center;
+				font-size: 1rem;
+				font-weight: 500;
+				min-width: 150px;
+				transition: all 0.2s ease;
+				color: var(--text);
+			}
+			
+			.option-button:hover {
+				background-color: #f8fafc;
+				transform: translateY(-1px);
+				box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+			}
+			
+			.correct {
+				background-color: var(--correct) !important;
+				color: white;
+				border-color: var(--correct);
+			}
+			
+			.incorrect {
+				background-color: var(--incorrect) !important;
+				color: white;
+				border-color: var(--incorrect);
+			}
+			
+			.question {
+				font-size: 1.25rem;
+				font-weight: 500;
+				margin: 2rem 0;
+				color: var(--text);
+			}
+			
+			.explanation {
+				margin-top: 2rem;
+				padding: 1.5rem;
+				background: #f8fafc;
+				border-radius: 8px;
+				font-size: 1rem;
+			}
+			
+			.answer {
+				color: var(--correct);
+				font-size: 1.25rem;
+				font-weight: 600;
+				margin-bottom: 1rem;
+			}
+			
+			a {
+				color: var(--primary);
+				text-decoration: none;
+				font-weight: 500;
+			}
+			
+			a:hover {
+				text-decoration: underline;
+			}
+		</style>
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-lg fixed-top">
+			<div class="container-fluid">
+				<a href="/"><span class="navbar-brand fw-semibold">Quiz App</span></a>
+				<a href="/topics" class="new-quiz-btn ms-auto">New Topic</a>
+			</div>
+		</nav>
+		
+		<div class="container py-4">
+			<div class="row justify-content-center">
+				<div class="col-12 col-md-10 col-lg-8">
+					<div class="quiz-container p-4">
+						<form action="/question/<%= topic %>/answer" method="POST">
+							<p class="question mb-4"><%= question %></p>
+							<div class="row g-3">
+								<% options.forEach((option, index) => { %>
+								<div class="col-12 col-sm-6">
+									<button
+										type="submit"
+										name="answer"
+										value="<%= index %>"
+										<%= showAnswer ? 'disabled' : '' %>
+										class="option-button w-100 <%= showAnswer ? (index === correctAnswerOption ? 'correct' : (index === answerOption ? 'incorrect' : '')) : '' %>"
+									>
+										<%= option %>
+									</button>
+								</div>
+								<% }) %>
+							</div>
+						</form>
+						
+						<div class="explanation <%= showExplanation ? 'd-block' : 'd-none' %>">
+							<h2 class="answer h5"><%= answer %></h2>
+							<% if (typeof explanation !== 'undefined') { %>
+							<p class="mb-3"><strong>Explanation:</strong> <%= explanation %></p>
+							<a href="/question/<%= topic %>" class="btn btn-primary">Next Question →</a>
+							<% } %>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

@@ -1,36 +1,27 @@
 import express from 'express';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
-import { getQuestion } from './openai.js';
+import './config/db.js';
+
+import topicRoutes from './routes/topic.routes.js';
+import questionRoutes from './routes/question.routes.js';
 
 const app = express();
 
-// for handling security vulnerabilities
-// by setting HTTP headers appropriately
 app.use(helmet());
-
 app.use(cookieParser());
-
-// for serving static files
 app.use(express.static('public'));
-
-// for parsing input into req.body
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
-app.get('/', async (req, res) => {
-	let question = JSON.parse(await getQuestion());
+app.use('/topics', topicRoutes);
+app.use('/question', questionRoutes);
 
-	res.cookie('question', JSON.stringify(question));
-
-	res.render('index', {
-		...question,
-		showExplanation: false,
-		showAnswer: false,
-	});
+app.get('/', (req, res) => {
+	res.render('landing');
 });
 
 app.post('/submit-answer', async (req, res) => {
